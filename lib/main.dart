@@ -1,3 +1,4 @@
+import 'package:app/counter.dart';
 import 'package:app/home_screen.dart';
 import 'package:app/login_screen.dart';
 import 'package:app/messenger_screen.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MessengerScreen(),
+      home: Counter(),
     
     );
   }
