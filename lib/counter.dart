@@ -11,7 +11,7 @@ class Counter extends StatelessWidget {
       child: BlocConsumer<CounterCubit,CounterStates>(
         builder: (context, state) => Scaffold(
                 appBar: AppBar(
-                  title: const Text('counter'),
+                  title: const Text('Counter'),
                 ),
                 body: Center(
                   child: Row(
