@@ -1,58 +1,58 @@
+import 'package:app/counter_states.dart';
+import 'package:app/cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Counter extends StatefulWidget {
-
-  @override
-  State<Counter> createState() => _CounterState();
-}
-
-class _CounterState extends State<Counter> {
-  var c = 0;
-  @override
-  void initState() {
-
-    super.initState();
-  }
+class Counter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'counter'
-        ),
-      ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-                onPressed: (){
-                  c--;
-                  setState((){});
-                },
-                child: Text(
-                  'MINUS',
+    return BlocProvider(
+      create: (context) => CounterCubit(CounterInitialState()),
+      child: BlocConsumer<CounterCubit,CounterStates>(
+        builder: (context, state) => Scaffold(
+                appBar: AppBar(
+                  title: const Text('counter'),
                 ),
-            ),
-            Text(
-              '$c',
-              style: TextStyle(
-                fontSize: 30,
+                body: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          CounterCubit.get(context).minus();
+                        },
+                        child: const Text(
+                          'MINUS',
+                        ),
+                      ),
+                      Text(
+                        '${CounterCubit.get(context).counter}',
+                        style: const TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          CounterCubit.get(context).plus();
+                        },
+                        child: const Text(
+                          'PLUS',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: (){
-                c++;
-                setState((){});
-              },
-              child: Text(
-                'PLUS',
-              ),
-            ),
-
-          ],
-        ),
-      ),
+        
+        
+        
+        
+        
+        
+        
+        
+        listener: (context, state) {}
+      )
     );
   }
 }

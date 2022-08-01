@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  
+class loginScreen extends StatefulWidget {
+
+  @override
+  State<loginScreen> createState() => _loginScreenState();
+}
+
+class _loginScreenState extends State<loginScreen> {
   var emailController = TextEditingController();
+
   var passwordController = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -12,94 +20,110 @@ class LoginScreen extends StatelessWidget {
         // ignore: prefer_const_constructors
         title: Text('Login page'),
       ),
-      
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                TextFormField(
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  onFieldSubmitted: (value) {
-                    print(value);
-                  },
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.email,
+
+      body: Form(
+        key: formKey,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                     ),
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  controller: passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.lock,
-                    ),
-                    suffixIcon: Icon(
-                      Icons.remove_red_eye,
-                    ),
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
+                  const SizedBox(
+                    height: 40,
                   ),
-                  onFieldSubmitted: (value) {
-                    print(value);
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: double.infinity,
-                  color: Colors.blue,
-                  child: MaterialButton(
-                      child: const Text(
-                        'LOGIN',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                  TextFormField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    onFieldSubmitted: (value) {
+                      print(value);
+                    },
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.email,
                       ),
-                      onPressed: () {
-                        print(emailController.text);
-                        print(passwordController.text);
-                      }),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Don\'t have an account?'),
-                    TextButton(
-                        onPressed: () {
-                          print('Regester');
-                        },
+                      border: OutlineInputBorder(),
+                      labelText: 'Email',
+                    ),
+                    validator: (value)
+                    {
+                      bool b = value!.isEmpty;
+                      if(b)
+                        {
+                          return 'Email must be entered';
+                        }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.lock,
+                      ),
+                      suffixIcon: Icon(
+                        Icons.remove_red_eye,
+                      ),
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                    ),
+                    onFieldSubmitted: (value) {
+                      print(value);
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    color: Colors.blue,
+                    child: MaterialButton(
                         child: const Text(
-                          'Redester Now',
-                        )),
-                  ],
-                )
-              ],
+                          'LOGIN',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          if(formKey.currentState!.validate())
+                            {
+                              print(emailController.text);
+                              print(passwordController.text);
+                            }
+
+                        }),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Don\'t have an account?'),
+                      TextButton(
+                          onPressed: () {
+                            print('Regester');
+                          },
+                          child: const Text(
+                            'Redester Now',
+                          )),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
